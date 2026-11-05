@@ -65,6 +65,8 @@ public class ComprobantesController {
         ocr.setText(sb.toString());
         comprobante.setBlobItem(blobItem);
         comprobante.setOcr(ocr);
+
+        System.out.println("Guardado");
         return service.save(comprobante);
     }
 
@@ -86,21 +88,25 @@ public class ComprobantesController {
         comprobanteDB.setSucursal(comprobante.sucursal());
         comprobanteDB.setDetalles(comprobante.detalles());
 
+        System.out.println("Actualziado");
         return service.save(comprobanteDB);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable String id) {
+        System.out.println("Eliminado");
         service.deleteById(id);
     }
 
     @GetMapping("/{id}")
     public Comprobante findById(@PathVariable String id) {
+        System.out.println("Encontrado");
         return service.findById(id);
     }
 
     @GetMapping
     public List<Comprobante> findAll() {
+        System.out.println("Dados");
         return service.findAll();
     }
 

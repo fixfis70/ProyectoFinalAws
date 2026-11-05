@@ -1,32 +1,34 @@
 import {api} from "./api.ts";
 
-export type TipoRegistro ="BOLETA"|"FACTURA"
+export type TipoRegistro = "BOLETA" | "FACTURA"
 
+// Server
 export interface ComprobanteRes {
     blobItem: {
         mimeType: string
         filename: string
-        path:string
+        path: string
     }
-    detalles:string
+    detalles: string
     fechaEmision: string
-    id: number
-    nombreUsuario:string
-    ocr:string
+    id: string
+    nombreUsuario: string
+    ocr: { text: string }
     sucursal: string
-    tipoRegistro:TipoRegistro
+    tipoRegistro: TipoRegistro
 }
-
+// Cliente
 export interface ComprobanteReq {
     tipoRegistro: TipoRegistro
     nombreUsuario: string
     sucursal: string
     detalles: string
-    blobItem: {
+    id?: string
+    blobItem?: {
         mimeType: string
         filename: string
-        base64:string
-    }
+        base64: string
+    } | null
 }
 
 export const getAllComprobantes = async (): Promise<ComprobanteRes[]> => {
@@ -34,22 +36,22 @@ export const getAllComprobantes = async (): Promise<ComprobanteRes[]> => {
     return response.data;
 };
 
-//POST /comprobantes
-export const postComprobante =  async (comprobante:ComprobanteReq): Promise<ComprobanteRes> => {
-    const response = await api.post<ComprobanteRes>("/comprobantes", comprobante);
+// POST /comprobantes  ->  crea
+// PUT  /comprobantes  ->  actualiza (requiere id)
+export const saveComprobante = async (comprobante: ComprobanteReq): Promise<ComprobanteRes> => {
+    const response = comprobante.id
+        ? await api.put<ComprobanteRes>("/comprobantes", comprobante)
+        : await api.post<ComprobanteRes>("/comprobantes", comprobante);
 
     return response.data;
 };
 
-export const putComprobante =  async (comprobante:ComprobanteReq): Promise<ComprobanteRes> => {
-    const response = await api.put<ComprobanteRes>("/comprobantes", comprobante);
-    return response.data;
+// DELETE /comprobantes/{id}
+export const delComprobante = async (id: string): Promise<void> => {
+    await api.delete(`/comprobantes/${encodeURIComponent(id)}`);
 };
 
-export const delComprobante =  async (id:string) => {
-    await api.delete<ComprobanteRes>(`/comprobantes${id}`);
+export const getImgUrl = (idComprobante: string): string => {
+    const baseUrl = import.meta.env.VITE_API_URL.replace(/\/?$/, "/");
+    return `${baseUrl}blobs/${encodeURIComponent(idComprobante)}`;
 };
-
-export const getImg = async (): File =>{
-
-}
