@@ -82,6 +82,7 @@ public class ComprobantesController {
         }
 
         comprobanteDB.setTipoRegistro(comprobante.tipoRegistro());
+        comprobanteDB.setNombreUsuario(comprobante.nombreUsuario());
         comprobanteDB.setSucursal(comprobante.sucursal());
         comprobanteDB.setDetalles(comprobante.detalles());
 
