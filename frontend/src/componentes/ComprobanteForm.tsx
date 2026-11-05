@@ -8,6 +8,7 @@ import {
     Typography,
     Paper
 } from "@mui/material";
+import * as React from "react";
 
 export interface ComprobanteReq {
     tipoRegistro: "BOLETA" | "FACTURA";
@@ -54,7 +55,7 @@ export default function ComprobanteForm({ onSubmit }: Props) {
         reader.readAsDataURL(file);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.SubmitEvent) => {
         e.preventDefault();
 
         if (!archivo || !base64) {
@@ -84,17 +85,15 @@ export default function ComprobanteForm({ onSubmit }: Props) {
     };
 
     return (
-        <Paper sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+        <Paper className="flex flex-col w-full justify-center m-auto">
             <h5>
                 Registrar comprobante
             </h5>
 
             <Box
-                component={"form"}
+                component="form"
+                className="flex flex-col gap-2 w-full"
                 onSubmit={handleSubmit}
-                display="flex"
-                flexDirection="column"
-                gap={2}
             >
                 <TextField
                     select

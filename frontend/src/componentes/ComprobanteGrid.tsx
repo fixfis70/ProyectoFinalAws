@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-    getComprobantes,
+    getAllComprobantes,
     type ComprobanteRes as Comprobante
 } from "../service/ComprobanteService.ts";
 
@@ -10,7 +10,7 @@ export default function ComprobantesGrid() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getComprobantes()
+        getAllComprobantes()
             .then(setComprobantes)
             .catch(console.error)
             .finally(() => setLoading(false));

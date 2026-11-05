@@ -29,3 +29,10 @@ Al final del documento, indicar el repositorio de GitHub y un enlace a un vídeo
 
 ### Diagrama de base datos:
 ![img_1.png](BD.png)
+
+### ¿Como iniciar el proyecto?
+
+crear las tablas
+
+- dynamoDB -> Comprobantes : id:string
+- storage  -> comprobantes
